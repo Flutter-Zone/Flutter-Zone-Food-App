@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app_flutter_zone/src/pages/sigin_page.dart';
 import '../widgets/order_card.dart';
 
 class OrderPage extends StatefulWidget {
@@ -141,7 +142,9 @@ class _OrderPageState extends State<OrderPage> {
             height: 20.0,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => SignInPage()));
+            },
             child: Container(
               height: 50.0,
               decoration: BoxDecoration(
