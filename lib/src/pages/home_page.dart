@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:food_app_flutter_zone/src/widgets/bought_foods.dart';
-import 'widgets/home_top_info.dart';
-import 'widgets/food_category.dart';
-import 'widgets/search_file.dart';
+import '../widgets/home_top_info.dart';
+import '../widgets/food_category.dart';
+import '../widgets/search_file.dart';
 
 // Data
-import 'data/food_data.dart';
+import '../data/food_data.dart';
 
 // Model 
-import 'models/food_model.dart';
+import '../models/food_model.dart';
 
-class HomeScreen extends StatefulWidget{
+class HomePage extends StatefulWidget{
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen>{
+class _HomePageState extends State<HomePage>{
 
   List<Food> _foods = foods;
   
