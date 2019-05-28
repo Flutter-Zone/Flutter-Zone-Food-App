@@ -77,7 +77,7 @@ class _OrderCardState extends State<OrderCard> {
                 ),
                 SizedBox(height: 5.0),
                 Text(
-                  "3.0",
+                  "\u01FE 3.0",
                   style: TextStyle(
                       fontSize: 16.0,
                       color: Colors.orangeAccent,
