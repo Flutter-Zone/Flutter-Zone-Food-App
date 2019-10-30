@@ -33,10 +33,7 @@ class _OrderCardState extends State<OrderCard> {
                             color: Color(0xFFD3D3D3))),
                     Text(
                       "0",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.grey
-                      ),
+                      style: TextStyle(fontSize: 18.0, color: Colors.grey),
                     ),
                     InkWell(
                         onTap: () {},
@@ -92,11 +89,10 @@ class _OrderCardState extends State<OrderCard> {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Text(
-                            "Chicken",
-                            style: TextStyle(
-                            color: Color(0xFFD3D3D3),
-                            fontWeight: FontWeight.bold)),
+                          Text("Chicken",
+                              style: TextStyle(
+                                  color: Color(0xFFD3D3D3),
+                                  fontWeight: FontWeight.bold)),
                           SizedBox(
                             width: 5.0,
                           ),
@@ -122,7 +118,7 @@ class _OrderCardState extends State<OrderCard> {
             ),
             Spacer(),
             GestureDetector(
-              onTap:(){},
+              onTap: () {},
               child: Icon(
                 Icons.cancel,
                 color: Colors.grey,

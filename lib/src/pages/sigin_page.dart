@@ -127,8 +127,9 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 SizedBox(width: 10.0),
                 GestureDetector(
-                  onTap: (){
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SignUpPage()));
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) => SignUpPage()));
                   },
                   child: Text(
                     "Sign up",
