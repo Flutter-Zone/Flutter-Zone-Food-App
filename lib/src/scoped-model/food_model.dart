@@ -15,11 +15,29 @@ class FoodModel extends Model {
     _foods.add(food);
   }
 
-  Future<Null> fetchFoods() {
-    return http
-        .get("http://192.168.56.1/flutter_food_app/api/foods/getFoods.php")
+  void fetchFoods() {
+    http
+        .get("http://192.168.43.221/flutter_food_app/api/foods/getFoods.php")
         .then((http.Response response) {
-      print("Fecthing data: ${response.body}");
+      // print("Fecthing data: ${response.body}");
+      final List fetchedData = json.decode(response.body);
+      final List<Food> fetchedFoodItems = [];
+      // print(fetchedData);
+      fetchedData.forEach((data) {
+        Food food = Food(
+          id: data["id"],
+          category: data["category"],
+          discount: double.parse(data["discount"]),
+          imagePath: data["imagePath"],
+          name: data["name"],
+          price: double.parse(data["price"]),
+        );
+
+        fetchedFoodItems.add(food);
+      });
+
+      _foods = fetchedFoodItems;
+      print(_foods);
     });
   }
 }
