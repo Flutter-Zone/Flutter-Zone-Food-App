@@ -26,18 +26,15 @@ class FoodModel extends Model {
       fetchedData.forEach((data) {
         Food food = Food(
           id: data["id"],
-          category: data["category"],
+          category: data["category_id"],
           discount: double.parse(data["discount"]),
-          imagePath: data["imagePath"],
-          name: data["name"],
+          imagePath: data["image_path"],
+          name: data["title"],
           price: double.parse(data["price"]),
         );
-
         fetchedFoodItems.add(food);
       });
-
       _foods = fetchedFoodItems;
-      print(_foods);
     });
   }
 }

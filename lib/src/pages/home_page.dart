@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:food_app_flutter_zone/src/scoped-model/food_model.dart';
+
+import 'package:food_app_flutter_zone/src/scoped-model/main_model.dart';
 import 'package:food_app_flutter_zone/src/widgets/bought_foods.dart';
+import 'package:scoped_model/scoped_model.dart';
 import '../widgets/home_top_info.dart';
 import '../widgets/food_category.dart';
 import '../widgets/search_file.dart';
 
-// Data
-import '../data/food_data.dart';
 
 // Model
 import '../models/food_model.dart';
 
 class HomePage extends StatefulWidget {
-  final FoodModel foodModel;
+  // final FoodModel foodModel;
 
-  HomePage(this.foodModel);
+  // HomePage(this.foodModel);
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Food> _foods = foods;
+  // List<Food> _foods = foods;
 
   @override
   void initState() {
-    widget.foodModel.fetchFoods();
+    // widget.foodModel.fetchFoods();
     super.initState();
   }
 
@@ -69,8 +69,12 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           SizedBox(height: 20.0),
-          Column(
-            children: _foods.map(_buildFoodItems).toList(),
+          ScopedModelDescendant<MainModel>(
+            builder: (BuildContext context, Widget child, MainModel model){
+              return Column(
+                children: model.foods.map(_buildFoodItems).toList(),
+              );
+            },
           ),
         ],
       ),
