@@ -36,7 +36,7 @@ class _MainScreenState extends State<MainScreen> {
     orderPage = OrderPage();
     favoritePage = FavoritePage();
     profilePage = ProfilePage();
-    pages = [homePage, orderPage, favoritePage, profilePage];
+    pages = [homePage, favoritePage, orderPage, profilePage];
 
     currentPage = homePage;
     super.initState();
@@ -65,15 +65,15 @@ class _MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.shopping_cart,
+              Icons.explore,
             ),
-            title: Text("Orders"),
+            title: Text("Explore"),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.favorite,
+              Icons.shopping_cart,
             ),
-            title: Text("Favorite"),
+            title: Text("Orders"),
           ),
           BottomNavigationBarItem(
             icon: Icon(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app_flutter_zone/src/widgets/custom_list_tile.dart';
+import 'package:food_app_flutter_zone/src/widgets/small_button.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -7,7 +8,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
   bool turnOnNotification = false;
   bool turnOnLocation = false;
 
@@ -15,7 +15,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-              child: Container(
+        child: Container(
           padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,21 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       SizedBox(
                         height: 20.0,
                       ),
-                      Container(
-                        height: 25.0,
-                        width: 60.0,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.blue,
-                            ),
-                            borderRadius: BorderRadius.circular(20.0)),
-                        child: Center(
-                          child: Text(
-                            "Edit",
-                            style: TextStyle(color: Colors.blue, fontSize: 16.0),
-                          ),
-                        ),
-                      ),
+                      SmallButton(btnText: "Edit"),
                     ],
                   ),
                 ],
@@ -104,7 +90,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(
+                height: 20.0,
+              ),
               Card(
                 elevation: 3.0,
                 child: Padding(
@@ -157,7 +145,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(
+                height: 20.0,
+              ),
               Card(
                 elevation: 3.0,
                 child: Padding(
@@ -175,7 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Switch(
                             value: turnOnNotification,
-                            onChanged: (bool value){
+                            onChanged: (bool value) {
                               // print("The value: $value");
                               setState(() {
                                 turnOnNotification = value;
@@ -199,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Switch(
                             value: turnOnLocation,
-                            onChanged: (bool value){
+                            onChanged: (bool value) {
                               // print("The value: $value");
                               setState(() {
                                 turnOnLocation = value;
@@ -215,9 +205,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                 ),
-                
               ),
-                            SizedBox(
+              SizedBox(
                 height: 30.0,
               ),
               Text(
@@ -227,30 +216,31 @@ class _ProfilePageState extends State<ProfilePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(
+                height: 20.0,
+              ),
               Card(
-
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Language", style: TextStyle(fontSize: 16.0)),
-                      // SizedBox(height: 10.0,),
-                      Divider(
-                        height: 30.0,
-                        color: Colors.grey,
-                      ),
-                      Text("Currency", style: TextStyle(fontSize: 16.0)),
-                      // SizedBox(height: 10.0,),
-                      Divider(
-                        height: 30.0,
-                        color: Colors.grey,
-                      ),
-                    ],
-                  ),
+                      children: <Widget>[
+                        Text("Language", style: TextStyle(fontSize: 16.0)),
+                        // SizedBox(height: 10.0,),
+                        Divider(
+                          height: 30.0,
+                          color: Colors.grey,
+                        ),
+                        Text("Currency", style: TextStyle(fontSize: 16.0)),
+                        // SizedBox(height: 10.0,),
+                        Divider(
+                          height: 30.0,
+                          color: Colors.grey,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
