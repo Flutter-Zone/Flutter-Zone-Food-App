@@ -11,30 +11,55 @@ class FoodModel extends Model {
     return List.from(_foods);
   }
 
-  void addFood(Food food) {
-    _foods.add(food);
+  void addFood(Food food) async{
+    // _foods.add(food);
+    final Map<String, dynamic> foodData = {
+      "title" : food.name,
+      "description": food.description,
+      "category": food.category,
+      "price": food.price,
+      "discount": food.discount,
+    };
+    final http.Response response = await http.post("https://foodie2-fe2c7.firebaseio.com/foods.json", body: json.encode(foodData));
+
+    final Map<String, dynamic> responeData = json.decode(response.body);
+
+    // print(responeData["name"]);
+    Food foodWithID = Food(
+      id: responeData["name"],
+      name: food.name,
+      description: food.description,
+      category: food.category,
+      discount: food.discount,
+      price: food.price,
+    );
   }
 
   void fetchFoods() {
     http
-        .get("http://192.168.43.221/flutter_food_app/api/foods/getFoods.php")
+        .get("https://foodie2-fe2c7.firebaseio.com/foods.json")
         .then((http.Response response) {
       // print("Fecthing data: ${response.body}");
-      final List fetchedData = json.decode(response.body);
-      final List<Food> fetchedFoodItems = [];
-      // print(fetchedData);
-      fetchedData.forEach((data) {
-        Food food = Food(
-          id: data["id"],
-          category: data["category_id"],
-          discount: double.parse(data["discount"]),
-          imagePath: data["image_path"],
-          name: data["title"],
-          price: double.parse(data["price"]),
+      final  Map<String, dynamic> fetchedData = json.decode(response.body);
+      print(fetchedData);
+
+      final List<Food> foodItems = [];
+
+      fetchedData.forEach((String id, dynamic foodData){
+        Food foodItem = Food(
+          id: id,
+          name: foodData["title"],
+          description: foodData["description"],
+          category: foodData["category"],
+          price: foodData["price"],
+          discount: foodData["discount"],
         );
-        fetchedFoodItems.add(food);
+
+        foodItems.add(foodItem);
       });
-      _foods = fetchedFoodItems;
+
+      _foods = foodItems;
+      print(_foods);
     });
   }
 }
