@@ -8,7 +8,7 @@ class FoodModel extends Model {
   List<Food> _foods = [];
   bool _isLoading = false;
 
-  bool get isLoading{
+  bool get isLoading {
     return _isLoading;
   }
 
@@ -17,7 +17,6 @@ class FoodModel extends Model {
   }
 
   Future<bool> addFood(Food food) async {
-    // _foods.add(food);
     _isLoading = true;
     notifyListeners();
 
@@ -35,7 +34,6 @@ class FoodModel extends Model {
 
       final Map<String, dynamic> responeData = json.decode(response.body);
 
-      // print(responeData["name"]);
       Food foodWithID = Food(
         id: responeData["name"],
         name: food.name,
@@ -45,9 +43,10 @@ class FoodModel extends Model {
         price: food.price,
       );
 
+      _foods.add(foodWithID);
       _isLoading = false;
       notifyListeners();
-      fetchFoods();
+      // fetchFoods();
       return Future.value(true);
     } catch (e) {
       _isLoading = false;
@@ -57,10 +56,14 @@ class FoodModel extends Model {
     }
   }
 
-  void fetchFoods() {
-    http
-        .get("https://foodie2-fe2c7.firebaseio.com/foods.json")
-        .then((http.Response response) {
+  Future<bool> fetchFoods() async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final http.Response response =
+          await http.get("https://foodie2-fe2c7.firebaseio.com/foods.json");
+
       // print("Fecthing data: ${response.body}");
       final Map<String, dynamic> fetchedData = json.decode(response.body);
       print(fetchedData);
@@ -81,7 +84,13 @@ class FoodModel extends Model {
       });
 
       _foods = foodItems;
+      _isLoading = false;
       notifyListeners();
-    });
+      return Future.value(true);
+    } catch (error) {
+      _isLoading = false;
+      notifyListeners();
+      return Future.value(false);
+    }
   }
 }

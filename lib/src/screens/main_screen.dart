@@ -31,11 +31,11 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     // call the fetch method on food
     // widget.foodModel.fetchFoods();
-    widget.model.fetchFoods();
+    // widget.model.fetchFoods();
 
     homePage = HomePage();
     orderPage = OrderPage();
-    favoritePage = FavoritePage();
+    favoritePage = FavoritePage(model: widget.model);
     profilePage = ProfilePage();
     pages = [homePage, favoritePage, orderPage, profilePage];
 
