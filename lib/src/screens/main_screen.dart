@@ -3,7 +3,7 @@ import 'package:food_app_flutter_zone/src/admin/pages/add_food_item.dart';
 import 'package:food_app_flutter_zone/src/scoped-model/main_model.dart';
 import '../pages/home_page.dart';
 import '../pages/order_page.dart';
-import '../pages/favorite_page.dart';
+import '../pages/explore_page.dart';
 import '../pages/profile_page.dart';
 
 class MainScreen extends StatefulWidget {
@@ -46,24 +46,34 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-          child: Scaffold(
+      child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black),
+          title: Text(
+            currentTab == 0 ? "Food Delivery App" : currentTab == 1 ? "All Food Items" : currentTab == 2 ? "Orders" : "Profile",
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
         ),
         drawer: Drawer(
           child: Column(
             children: <Widget>[
               ListTile(
-                onTap: (){
+                onTap: () {
                   Navigator.of(context).pop();
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (BuildContext context) => AddFoodItem())
-                  );
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => AddFoodItem()));
                 },
                 leading: Icon(Icons.list),
-                title: Text("Add food Item", style: TextStyle(fontSize: 16.0),),
+                title: Text(
+                  "Add food Item",
+                  style: TextStyle(fontSize: 16.0),
+                ),
               )
             ],
           ),
