@@ -3,6 +3,7 @@ import 'package:food_app_flutter_zone/src/admin/pages/add_food_item.dart';
 import 'package:food_app_flutter_zone/src/models/food_model.dart';
 import 'package:food_app_flutter_zone/src/scoped-model/main_model.dart';
 import 'package:food_app_flutter_zone/src/widgets/food_item_card.dart';
+import 'package:food_app_flutter_zone/src/widgets/show_dailog.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class FavoritePage extends StatefulWidget {
@@ -61,6 +62,13 @@ class _FavoritePageState extends State<FavoritePage> {
                         );
                         _explorePageScaffoldKey.currentState.showSnackBar(snackBar);
                       }
+                    },
+                    onDoubleTap: (){
+                      // delete food item
+                      showLoadingIndicator(context, "Deleting food item...");
+                      model.deleteFood(model.foods[index].id).then((bool response){
+                        Navigator.of(context).pop();
+                      });
                     },
                     child: FoodItemCard(
                       model.foods[index].name,

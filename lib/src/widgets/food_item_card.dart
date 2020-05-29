@@ -14,7 +14,7 @@ class FoodItemCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10.0),
       padding: EdgeInsets.all(10.0),
       width: MediaQuery.of(context).size.width,
-      height: 120.0,
+      height: 125.0,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),

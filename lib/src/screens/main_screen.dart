@@ -29,10 +29,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    // call the fetch method on food
-    // widget.foodModel.fetchFoods();
-    // widget.model.fetchFoods();
-
     homePage = HomePage();
     orderPage = OrderPage();
     favoritePage = FavoritePage(model: widget.model);
@@ -52,13 +48,30 @@ class _MainScreenState extends State<MainScreen> {
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black),
           title: Text(
-            currentTab == 0 ? "Food Delivery App" : currentTab == 1 ? "All Food Items" : currentTab == 2 ? "Orders" : "Profile",
+            currentTab == 0
+                ? "Food App"
+                : currentTab == 1
+                    ? "All Food Items"
+                    : currentTab == 2 ? "Orders" : "Profile",
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(
+                  Icons.notifications_none,
+                  // size: 30.0,
+                  color: Theme.of(context).primaryColor,
+                ),
+                onPressed: () {}),
+            IconButton(
+              icon: _buildShoppingCart(),
+              onPressed: () {},
+            )
+          ],
         ),
         drawer: Drawer(
           child: Column(
@@ -117,6 +130,33 @@ class _MainScreenState extends State<MainScreen> {
         ),
         body: currentPage,
       ),
+    );
+  }
+
+  Widget _buildShoppingCart() {
+    return Stack(
+      children: <Widget>[
+        Icon(
+          Icons.shopping_cart,
+          // size: 30.0,
+          color: Theme.of(context).primaryColor,
+        ),
+        Positioned(
+          top: 0.0,
+          right: 0.0,
+          child: Container(
+            height: 12.0,
+            width: 12.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: Colors.red,
+            ),
+            child: Center(
+              child: Text("1", style: TextStyle(fontSize: 12.0, color: Colors.white,),),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
