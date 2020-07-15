@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:food_app_flutter_zone/src/enums/auth_mode.dart';
 import 'package:food_app_flutter_zone/src/pages/sigin_page.dart';
 import 'package:food_app_flutter_zone/src/scoped-model/main_model.dart';
+import 'package:food_app_flutter_zone/src/widgets/show_dailog.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -18,6 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
   // String _confirmPassword;
 
   GlobalKey<FormState> _formKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   Widget _buildEmailTextField() {
     return TextFormField(
@@ -62,9 +65,6 @@ class _SignUpPageState extends State<SignUpPage> {
         if (username.isEmpty) {
           errorMessage = "Username field is required";
         }
-        // if(username.length > 8 ){
-        //   errorMessage = "Your username is too short";
-        // }
         return errorMessage;
       },
     );
@@ -104,36 +104,11 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  // Widget _buildConfirmPasswordTextField() {
-  //   return TextFormField(
-  //     decoration: InputDecoration(
-  //       hintText: "Confirm Password",
-  //       hintStyle: TextStyle(
-  //         color: Color(0xFFBDC2CB),
-  //         fontSize: 18.0,
-  //       ),
-  //       suffixIcon: IconButton(
-  //         onPressed: () {
-  //           setState(() {
-  //             _toggleConfirmVisibility = !_toggleConfirmVisibility;
-  //           });
-  //         },
-  //         icon: _toggleConfirmVisibility
-  //             ? Icon(Icons.visibility_off)
-  //             : Icon(Icons.visibility),
-  //       ),
-  //     ),
-  //     obscureText: _toggleConfirmVisibility,
-  //     onSaved: (String value){
-
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-          child: Scaffold(
+      child: Scaffold(
+        key: _scaffoldKey,
         resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.grey.shade100,
         body: Padding(
@@ -218,6 +193,7 @@ class _SignUpPageState extends State<SignUpPage> {
         builder: (BuildContext sctx, Widget child, MainModel model) {
       return GestureDetector(
         onTap: () {
+          showLoadingIndicator(context, "Signing up...");
           onSubmit(model.authenticate);
         },
         child: Container(
@@ -243,8 +219,25 @@ class _SignUpPageState extends State<SignUpPage> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      print("The email: $_email, the password: $_password");
-      authenticate(_email, _password);
+      authenticate(_email, _password, _username, authMode: AuthMode.SignUp)
+          .then((final response) {
+        Navigator.of(context).pop();
+        if (!response['hasError']) {
+          // Todo - Navigate to the homepage
+          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacementNamed("/mainscreen");
+        } else {
+          // todo - display the error message in the snackbar
+          Navigator.of(context).pop();
+          _scaffoldKey.currentState.showSnackBar(
+            SnackBar(
+              duration: Duration(seconds: 2),
+              backgroundColor: Colors.red,
+              content: Text(response['message']),
+            ),
+          );
+        }
+      });
     }
   }
 }

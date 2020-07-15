@@ -152,7 +152,13 @@ class _MainScreenState extends State<MainScreen> {
               color: Colors.red,
             ),
             child: Center(
-              child: Text("1", style: TextStyle(fontSize: 12.0, color: Colors.white,),),
+              child: Text(
+                "1",
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
         ),
