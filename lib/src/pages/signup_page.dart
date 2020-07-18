@@ -219,13 +219,14 @@ class _SignUpPageState extends State<SignUpPage> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      authenticate(_email, _password, _username, authMode: AuthMode.SignUp)
+      authenticate(_email, _password, _username, "customer",
+              authMode: AuthMode.SignUp)
           .then((final response) {
         Navigator.of(context).pop();
         if (!response['hasError']) {
           // Todo - Navigate to the homepage
           Navigator.of(context).pop();
-          Navigator.of(context).pushReplacementNamed("/mainscreen");
+          Navigator.of(context).pushNamed("/mainscreen");
         } else {
           // todo - display the error message in the snackbar
           Navigator.of(context).pop();

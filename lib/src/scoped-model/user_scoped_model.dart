@@ -22,6 +22,43 @@ class UserModel extends Model {
     return _isLoading;
   }
 
+  Future<bool> fetchUserInfos() async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final http.Response response =
+          await http.get("https://foodie2-fe2c7.firebaseio.com/users.json");
+
+      // print("Fecthing data: ${response.body}");
+      final Map<String, dynamic> fetchedData = json.decode(response.body);
+      print(fetchedData);
+
+      final List<User> userInfos = [];
+
+      fetchedData.forEach((String id, dynamic userInfoData) {
+        User foodItem = User(
+          id: id,
+          email: userInfoData['email'],
+          userType: userInfoData['userType'],
+          username: userInfoData['username'],
+        );
+
+        userInfos.add(foodItem);
+      });
+
+      _users = userInfos;
+      _isLoading = false;
+      notifyListeners();
+      return Future.value(true);
+    } catch (error) {
+      print("The errror: $error");
+      _isLoading = false;
+      notifyListeners();
+      return Future.value(false);
+    }
+  }
+
   Future<bool> addUserInfo(Map<String, dynamic> userInfo) async {
     _isLoading = true;
     notifyListeners();
@@ -51,7 +88,7 @@ class UserModel extends Model {
   }
 
   Future<Map<String, dynamic>> authenticate(
-      String email, String password, String username,
+      String email, String password, String username, String userType,
       {AuthMode authMode = AuthMode.SignIn}) async {
     _isLoading = true;
     notifyListeners();
@@ -65,6 +102,7 @@ class UserModel extends Model {
     Map<String, dynamic> userInfo = {
       "email": email,
       "username": username,
+      "userType": userType,
     };
 
     String message;
@@ -93,7 +131,6 @@ class UserModel extends Model {
           id: responseBody['localId'],
           email: responseBody['email'],
           token: responseBody['idToken'],
-          userType: 'customer',
         );
 
         if (authMode == AuthMode.SignUp) {
@@ -119,6 +156,7 @@ class UserModel extends Model {
         'hasError': hasError,
       };
     } catch (error) {
+      print("The error: $error");
       _isLoading = false;
       notifyListeners();
 

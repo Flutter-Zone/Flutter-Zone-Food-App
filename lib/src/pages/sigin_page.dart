@@ -179,11 +179,11 @@ class _SignInPageState extends State<SignInPage> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      authenticate(_email, _password).then((final response){
-        if(!response['hasError']){
+      authenticate(_email, _password).then((final response) {
+        if (!response['hasError']) {
           Navigator.of(context).pop();
           Navigator.of(context).pushReplacementNamed("/mainscreen");
-        }else{
+        } else {
           Navigator.of(context).pop();
           _scaffoldKey.currentState.showSnackBar(
             SnackBar(
