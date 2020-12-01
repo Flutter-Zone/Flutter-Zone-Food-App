@@ -28,11 +28,11 @@ class _AddFoodItemState extends State<AddFoodItem> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: WillPopScope(
-        onWillPop: (){
+        onWillPop: () {
           Navigator.of(context).pop(false);
           return Future.value(false);
         },
-              child: Scaffold(
+        child: Scaffold(
           key: _scaffoldStateKey,
           appBar: AppBar(
             elevation: 0.0,
@@ -85,14 +85,18 @@ class _AddFoodItemState extends State<AddFoodItem> {
                       height: 70.0,
                     ),
                     ScopedModelDescendant(
-                      builder:
-                          (BuildContext context, Widget child, MainModel model) {
+                      builder: (BuildContext context, Widget child,
+                          MainModel model) {
                         return GestureDetector(
                           onTap: () {
                             onSubmit(model.addFood, model.updateFood);
                             if (model.isLoading) {
                               // show loading progess indicator
-                              showLoadingIndicator(context, widget.food != null ? "Updating food..." : "Adding food...");
+                              showLoadingIndicator(
+                                  context,
+                                  widget.food != null
+                                      ? "Updating food..."
+                                      : "Adding food...");
                             }
                           },
                           child: Button(
@@ -166,8 +170,6 @@ class _AddFoodItemState extends State<AddFoodItem> {
       }
     }
   }
-
-
 
   Widget _buildTextFormField(String hint, {int maxLine = 1}) {
     return TextFormField(

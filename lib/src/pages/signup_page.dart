@@ -219,8 +219,14 @@ class _SignUpPageState extends State<SignUpPage> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      authenticate(_email, _password, _username, "customer",
-              authMode: AuthMode.SignUp)
+      Map<String, dynamic> userInfo = {
+        "email": _email,
+        "username": _username,
+        "userType": "customer",
+      };
+
+      authenticate(_email, _password,
+              authMode: AuthMode.SignUp, userInfo: userInfo)
           .then((final response) {
         Navigator.of(context).pop();
         if (!response['hasError']) {

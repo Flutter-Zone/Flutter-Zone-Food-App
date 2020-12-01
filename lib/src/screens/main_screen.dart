@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_app_flutter_zone/src/admin/pages/add_food_item.dart';
+import 'package:food_app_flutter_zone/src/pages/sigin_page.dart';
 import 'package:food_app_flutter_zone/src/scoped-model/main_model.dart';
+import 'package:scoped_model/scoped_model.dart';
 import '../pages/home_page.dart';
 import '../pages/order_page.dart';
 import '../pages/explore_page.dart';
@@ -29,6 +31,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
+    widget.model.fetchAll();
+
     homePage = HomePage();
     orderPage = OrderPage();
     favoritePage = FavoritePage(model: widget.model);
@@ -52,7 +56,9 @@ class _MainScreenState extends State<MainScreen> {
                 ? "Food App"
                 : currentTab == 1
                     ? "All Food Items"
-                    : currentTab == 2 ? "Orders" : "Profile",
+                    : currentTab == 2
+                        ? "Orders"
+                        : "Profile",
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 16.0,
@@ -67,10 +73,25 @@ class _MainScreenState extends State<MainScreen> {
                   color: Theme.of(context).primaryColor,
                 ),
                 onPressed: () {}),
-            IconButton(
-              icon: _buildShoppingCart(),
-              onPressed: () {},
-            )
+            currentTab == 3
+                ? ScopedModelDescendant(builder:
+                    (BuildContext context, Widget child, MainModel model) {
+                    return IconButton(
+                      icon: Icon(
+                        Icons.logout,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) => SignInPage()));
+                        model.logout();
+                      },
+                    );
+                  })
+                : IconButton(
+                    icon: _buildShoppingCart(),
+                    onPressed: () {},
+                  )
           ],
         ),
         drawer: Drawer(

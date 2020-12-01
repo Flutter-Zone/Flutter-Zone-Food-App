@@ -16,7 +16,7 @@ class FoodModel extends Model {
     return List.from(_foods);
   }
 
-  int get foodLength{
+  int get foodLength {
     return _foods.length;
   }
 
@@ -33,7 +33,7 @@ class FoodModel extends Model {
         "discount": food.discount,
       };
       final http.Response response = await http.post(
-          "https://foodie2-fe2c7.firebaseio.com/foods.json",
+          "https://flutter-food-a2151.firebaseio.com/foods.json",
           body: json.encode(foodData));
 
       final Map<String, dynamic> responeData = json.decode(response.body);
@@ -65,8 +65,8 @@ class FoodModel extends Model {
     notifyListeners();
 
     try {
-      final http.Response response =
-          await http.get("https://foodie2-fe2c7.firebaseio.com/foods.json");
+      final http.Response response = await http
+          .get("https://flutter-food-a2151.firebaseio.com/foods.json");
 
       // print("Fecthing data: ${response.body}");
       final Map<String, dynamic> fetchedData = json.decode(response.body);
@@ -99,7 +99,7 @@ class FoodModel extends Model {
     }
   }
 
-  Future<bool> updateFood(Map<String, dynamic> foodData, String foodId) async{
+  Future<bool> updateFood(Map<String, dynamic> foodData, String foodId) async {
     _isLoading = true;
     notifyListeners();
 
@@ -108,8 +108,10 @@ class FoodModel extends Model {
 
     // get the index of the food
     int foodIndex = _foods.indexOf(theFood);
-    try{
-      await http.put("https://foodie2-fe2c7.firebaseio.com/foods/${foodId}.json", body: json.encode(foodData));
+    try {
+      await http.put(
+          "https://flutter-food-a2151.firebaseio.com/foods/${foodId}.json",
+          body: json.encode(foodData));
 
       Food updateFoodItem = Food(
         id: foodId,
@@ -125,45 +127,42 @@ class FoodModel extends Model {
       _isLoading = false;
       notifyListeners();
       return Future.value(true);
-    }catch(error){
+    } catch (error) {
       _isLoading = false;
       notifyListeners();
       return Future.value(false);
     }
   }
 
-  Future<bool> deleteFood(String foodId) async{
+  Future<bool> deleteFood(String foodId) async {
     _isLoading = true;
     notifyListeners();
 
-    try{
-      final http.Response response = await http.delete("https://foodie2-fe2c7.firebaseio.com/foods/${foodId}.json");
+    try {
+      final http.Response response = await http.delete(
+          "https://flutter-food-a2151.firebaseio.com/foods/${foodId}.json");
 
       // delete item from the list of food items
-      _foods.removeWhere((Food food) => food.id == foodId );
+      _foods.removeWhere((Food food) => food.id == foodId);
 
-
-    _isLoading = false;
-    notifyListeners();
-    return Future.value(true);
-    }catch(error){
+      _isLoading = false;
+      notifyListeners();
+      return Future.value(true);
+    } catch (error) {
       _isLoading = false;
       notifyListeners();
       return Future.value(false);
     }
   }
 
-
-  Food getFoodItemById(String foodId){
+  Food getFoodItemById(String foodId) {
     Food food;
-    for(int i = 0; i < _foods.length; i++){
-      if(_foods[i].id == foodId){
+    for (int i = 0; i < _foods.length; i++) {
+      if (_foods[i].id == foodId) {
         food = _foods[i];
         break;
       }
     }
     return food;
   }
-
-
 }

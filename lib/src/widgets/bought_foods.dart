@@ -37,9 +37,7 @@ class _BoughtFoodState extends State<BoughtFood> {
             height: 230.0,
             width: 340.0,
             child: Image(
-              image: AssetImage(
-                widget.imagePath
-              ),
+              image: AssetImage(widget.imagePath),
               fit: BoxFit.cover,
             ),
           ),
@@ -50,10 +48,12 @@ class _BoughtFoodState extends State<BoughtFood> {
             height: 60.0,
             child: Container(
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [Colors.black, Colors.black12])),
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [Colors.black, Colors.black12],
+                ),
+              ),
             ),
           ),
           Positioned(
@@ -121,8 +121,7 @@ class _BoughtFoodState extends State<BoughtFood> {
                           fontWeight: FontWeight.bold,
                           color: Colors.orangeAccent),
                     ),
-                    Text("Min order",
-                        style: TextStyle(color: Colors.grey))
+                    Text("Min order", style: TextStyle(color: Colors.grey))
                   ],
                 ),
               ],
