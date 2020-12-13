@@ -5,6 +5,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserModel extends Model {
   List<User> _users = [];
@@ -164,6 +165,7 @@ class UserModel extends Model {
       }
 
       Map<String, dynamic> responseBody = json.decode(response.body);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
       if (responseBody.containsKey('idToken')) {
         _authenticatedUser = User(
@@ -175,12 +177,22 @@ class UserModel extends Model {
         if (authMode == AuthMode.SignIn) {
           _authenticatedUserInfo = await getUserInfo(responseBody['localId']);
 
+          prefs.setString("username", _authenticatedUserInfo.username);
+          prefs.setString("email", _authenticatedUserInfo.email);
+          prefs.setString("userType", _authenticatedUserInfo.userType);
+
           message = "Sign in successfully";
         } else if (authMode == AuthMode.SignUp) {
           userInfo['localId'] = responseBody['localId'];
           addUserInfo(userInfo);
+          prefs.setString("username", userInfo['username']);
+          prefs.setString("email", userInfo['email']);
+          prefs.setString("userType", userInfo['userType']);
           message = "Sign up successfully";
         }
+
+        prefs.setString("token", responseBody['idToken']);
+        prefs.setString("expiryTime", responseBody['expiresIn']);
       } else {
         hasError = true;
         if (responseBody['error']['message'] == 'EMAIL_EXISTS') {
@@ -207,6 +219,17 @@ class UserModel extends Model {
         'message': 'Failed to sign up successfully',
         'hasError': !hasError,
       };
+    }
+  }
+
+  void autoLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString("token");
+
+    if (token != null) {
+      _authenticatedUser = null;
+      _authenticatedUserInfo = null;
+      notifyListeners();
     }
   }
 
